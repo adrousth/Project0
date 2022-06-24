@@ -11,7 +11,6 @@ def add_customer():
     print("add customer")
     data = request.get_json()
     customer_dao.add_customer(data)
-    print(data)
     return {}
 
 
@@ -96,5 +95,4 @@ def delete_account_by_id(customer_id, account_id):
     customer = get_customer_by_id(customer_id)
     print("delete account by id:", account_id)
     return {}
-
 
