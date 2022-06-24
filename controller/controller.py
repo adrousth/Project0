@@ -1,26 +1,30 @@
-from flask import Flask, request, ctx
 
-app = Flask(__name__)
+from flask import request, Blueprint
+from dao.customer_dao import CustomerDao
+
+ctrl = Blueprint('controller', __name__)
+customer_dao = CustomerDao()
 
 
 # POST /customers: Creates a new customer
-@app.route("/customers", methods=["POST"])
+@ctrl.route("/customers", methods=["POST"])
 def add_customer():
     print("add customer")
     data = request.get_json()
-    print(data)
+    customer_dao.add_customer(data)
     return {}
 
 
 # GET /customers: Gets all customers
-@app.route("/customers", methods=["GET"])
+
+@ctrl.route("/customers", methods=["GET"])
 def get_all_customers():
     print("get all customers")
     return {}
 
 
 # GET /customer/{customer_id}: Get customer with an id of X (if the customer exists)
-@app.route("/customer/<customer_id>", methods=["GET"])
+@ctrl.route("/customer/<customer_id>", methods=["GET"])
 def get_customer_by_id(customer_id):
     # check if customer id exists
     print("get customer by id:", customer_id)
@@ -28,7 +32,7 @@ def get_customer_by_id(customer_id):
 
 
 # PUT /customer/{customer_id}: Update customer with an id of X (if the customer exists)
-@app.route("/customer/<customer_id>", methods=["PUT"])
+@ctrl.route("/customer/<customer_id>", methods=["PUT"])
 def update_customer_by_id(customer_id):
     print("update customer by id:", customer_id)
     data = request.get_json()
@@ -37,14 +41,14 @@ def update_customer_by_id(customer_id):
 
 
 # DELETE /customer/{customer_id}: Delete customer with an id of X (if the customer exists)
-@app.route("/customer/<customer_id>", methods=["DELETE"])
+@ctrl.route("/customer/<customer_id>", methods=["DELETE"])
 def delete_customer_by_id(customer_id):
     print("delete customer by id:", customer_id)
     return {}
 
 
 # POST /customer/{customer_id}/accounts: Create a new account for a customer with id of X (if customer exists)
-@app.route("/customer/<customer_id>/accounts", methods=["POST"])
+@ctrl.route("/customer/<customer_id>/accounts", methods=["POST"])
 def create_account(customer_id):
     print("create account for id:", customer_id)
     data = request.get_json()
@@ -56,7 +60,7 @@ def create_account(customer_id):
 # GET /customer/{customer_id}/accounts: Get all accounts for customer with id of X (if customer exists)
 # GET /customer/{customer_id}/accounts?amountLessThan=1000&amountGreaterThan=300:
 # Get all accounts for customer id of X with balances between Y and Z (if customer exists)
-@app.route("/customer/<customer_id>/accounts", methods=["GET"])
+@ctrl.route("/customer/<customer_id>/accounts", methods=["GET"])
 def get_customer_accounts(customer_id):
     amount_greater_than = request.args.get("amountGreaterThan")
     amount_less_than = request.args.get("amountLessThan")
@@ -68,7 +72,7 @@ def get_customer_accounts(customer_id):
 
 # GET /customer/{customer_id}/account/{account_id}: Get account with id of Y belonging to customer with id of X
 # (if customer and account exist AND if account belongs to customer)
-@app.route("/customer/<customer_id>/account/<account_id>", methods=["GET"])
+@ctrl.route("/customer/<customer_id>/account/<account_id>", methods=["GET"])
 def get_account_by_id(customer_id, account_id):
     customer = get_customer_by_id(customer_id)
     print("get account by id:", account_id)
@@ -77,7 +81,7 @@ def get_account_by_id(customer_id, account_id):
 
 # PUT /customer/{customer_id}/account/{account_id}: Update account with id of Y belonging to customer with id of X
 # (if customer and account exist AND if account belongs to customer)
-@app.route("/customer/<customer_id>/account/<account_id>", methods=["PUT"])
+@ctrl.route("/customer/<customer_id>/account/<account_id>", methods=["PUT"])
 def update_account_by_id(customer_id, account_id):
     customer = get_customer_by_id(customer_id)
     print("update account by id:", account_id)
@@ -88,11 +92,9 @@ def update_account_by_id(customer_id, account_id):
 
 # DELETE /customer/{customer_id}/account/{account_id}: Delete account with id of Y belonging to customer with id of X
 # (if customer and account exist AND if account belongs to customer)
-@app.route("/customer/<customer_id>/account/<account_id>", methods=["DELETE"])
+@ctrl.route("/customer/<customer_id>/account/<account_id>", methods=["DELETE"])
 def delete_account_by_id(customer_id, account_id):
     customer = get_customer_by_id(customer_id)
     print("delete account by id:", account_id)
     return {}
 
-
-app.run(port=8080)
