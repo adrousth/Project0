@@ -2,7 +2,7 @@ from model.customer import Customer
 
 
 class CustomerDao:
-    def __int__(self):
+    def __init__(self):
         pass
 
     def get_all_customers(self):
@@ -11,7 +11,6 @@ class CustomerDao:
 
     def get_customer_by_id(self, customer_id):
         print("customer id:", customer_id)
-
         return {}
 
     def add_customer(self, data):
