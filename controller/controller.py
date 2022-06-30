@@ -1,8 +1,13 @@
+
+from exception.exceptions import *
+
+
 from flask import request, Blueprint
-from dao.customer_dao import CustomerDao
+from model.customer import Customer
+from service.customer_service import CustomerService
 
 ctrl = Blueprint('controller', __name__)
-customer_dao = CustomerDao()
+customer_service = CustomerService()
 
 
 # POST /customers: Creates a new customer
@@ -10,7 +15,7 @@ customer_dao = CustomerDao()
 def add_customer():
     print("add customer")
     data = request.get_json()
-    customer_dao.add_customer(data)
+    customer_service.add_customer(data)
     return {}
 
 
@@ -18,35 +23,47 @@ def add_customer():
 @ctrl.route("/customers", methods=["GET"])
 def get_all_customers():
     print("get all customers")
-
-    return {
-        "customers": customer_dao.get_all_customers()
-    }
+    return customer_service.get_all_customers()
 
 
 # GET /customer/{customer_id}: Get customer with an id of X (if the customer exists)
 @ctrl.route("/customer/<customer_id>", methods=["GET"])
 def get_customer_by_id(customer_id):
     print("get customer by id:", customer_id)
-    return {
-        "customer": customer_dao.get_customer_by_id(customer_id)
-    }
+
+    try:
+        return customer_service.get_user_by_id(customer_id)  # dictionary
+    except CustomerNotFoundError as e:
+        return {
+                   "message": str(e)
+               }, 404
+
 
 
 # PUT /customer/{customer_id}: Update customer with an id of X (if the customer exists)
 @ctrl.route("/customer/<customer_id>", methods=["PUT"])
 def update_customer_by_id(customer_id):
     print("update customer by id:", customer_id)
-    data = request.get_json()
-    print(data)
-    return {}
+    try:
+        data = request.get_json()
+        print(data)
+        return customer_service.update_customer(Customer(customer_id, data['first_name'], data['last_name']))
+    except CustomerNotFoundError as e:
+        return {
+                   "message": str(e)
+               }, 404
 
 
 # DELETE /customer/{customer_id}: Delete customer with an id of X (if the customer exists)
 @ctrl.route("/customer/<customer_id>", methods=["DELETE"])
 def delete_customer_by_id(customer_id):
     print("delete customer by id:", customer_id)
-    return {}
+    try:
+        return customer_service.delete_customer_by_id(customer_id)
+    except CustomerNotFoundError as e:
+        return {
+                   "message": str(e)
+               }, 404
 
 
 # POST /customer/{customer_id}/accounts: Create a new account for a customer with id of X (if customer exists)

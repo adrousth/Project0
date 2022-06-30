@@ -15,6 +15,7 @@ class CustomerDao:
         return all_customers
 
     def get_customer_by_id(self, customer_id):
+        print("customer id:", customer_id)
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM customers WHERE id = %s",
