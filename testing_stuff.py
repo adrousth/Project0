@@ -1,34 +1,25 @@
-from flask import Flask, request
-
-from faker import Faker
-
-fake = Faker()
-
-app = Flask(__name__)
-users = {
-    10001: {
-        "first name": "joe",
-        "last name": "smith"
-    },
-    10002: {
-        "first name": "steve",
-        "last name": "johnson"
-    }
-
-}
+import psycopg
 
 
-@app.route('/users', methods=['GET'])
-def get_users():
-    return users
+class User:
+    def __init__(self, data):
+        self.user_id = data[0]
+        self.first_name = data[1]
+        self.last_name = data[2]
+
+    def __str__(self):
+        return f"user id: {self.user_id}, first name: {self.first_name}, last name: {self.last_name}"
 
 
-@app.route('/users', methods=['POST'])
-def add_user():
-    print("add user")
-    data = request.get_json()
-    print(data)
-    return {}
+with psycopg.connect("host=localhost port=5432 dbname=postgres user=postgres password=ButtNugget0412!") as conn:
+
+    print(conn)
+
+    with conn.cursor() as cur:
+        cur.execute("insert into users (first_name, last_name) values (%s, %s) returning *", ('testing', 'name'))
+        user = User(cur.fetchone())
+
+    print(user)
 
 
-app.run(port=8081)
+

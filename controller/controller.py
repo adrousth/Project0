@@ -18,15 +18,19 @@ def add_customer():
 @ctrl.route("/customers", methods=["GET"])
 def get_all_customers():
     print("get all customers")
-    return {}
+
+    return {
+        "customers": customer_dao.get_all_customers()
+    }
 
 
 # GET /customer/{customer_id}: Get customer with an id of X (if the customer exists)
 @ctrl.route("/customer/<customer_id>", methods=["GET"])
 def get_customer_by_id(customer_id):
-    # check if customer id exists
     print("get customer by id:", customer_id)
-    return {}
+    return {
+        "customer": customer_dao.get_customer_by_id(customer_id)
+    }
 
 
 # PUT /customer/{customer_id}: Update customer with an id of X (if the customer exists)
