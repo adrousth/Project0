@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1a3bdfba-f4ba-454d-888f-72e2a8064b2f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/account_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/account_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/customer_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/customer_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/account_dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/dao/account_dao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/customer_dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/dao/customer_dao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/account.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/account.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/customer_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/customer_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_stuff.py" beforeDir="false" afterPath="$PROJECT_DIR$/testing_stuff.py" afterDir="false" />
-    </list>
+    <list default="true" id="1a3bdfba-f4ba-454d-888f-72e2a8064b2f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +43,7 @@
       <recent name="C:\Users\Alex\Documents\revature\Project0\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.testing_stuff">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project0" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,8 +88,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
         <item itemvalue="Python.testing_stuff" />
+        <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
   </component>
