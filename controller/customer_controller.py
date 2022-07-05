@@ -4,25 +4,28 @@ from flask import request, Blueprint
 from model.customer import Customer
 from service.customer_service import CustomerService
 
-customer_ctrl = Blueprint('controller', __name__)
+customer_ctrl = Blueprint('customer_controller', __name__)
 customer_service = CustomerService()
 
 
 # POST /customers: Creates a new customer
 @customer_ctrl.route("/customers", methods=["POST"])
 def add_customer():
-    print("add customer")
     data = request.get_json()
-    customer_service.add_customer(data)
-    return {}
+    try:
+        customer = customer_service.add_customer(data)
+        return customer.to_dict(), 202
+    except InvalidParameterError as e:
+        return {
+            "message": str(e)
+        }, 400
 
 
 # GET /customers: Gets all customers
-
 @customer_ctrl.route("/customers", methods=["GET"])
 def get_all_customers():
-    print("get all customers")
-    return customer_service.get_all_customers()
+    customers = customer_service.get_all_customers()
+    return {"customers": customers}
 
 
 # GET /customer/{customer_id}: Get customer with an id of X (if the customer exists)
@@ -30,7 +33,8 @@ def get_all_customers():
 def get_customer_by_id(customer_id):
     print("get customer by id:", customer_id)
     try:
-        return customer_service.get_user_by_id(customer_id)  # dictionary
+        customer = customer_service.get_customer_by_id(customer_id)
+        return customer.to_dict()
     except CustomerNotFoundError as e:
         return {
                    "message": str(e)
@@ -43,12 +47,15 @@ def update_customer_by_id(customer_id):
     print("update customer by id:", customer_id)
     try:
         data = request.get_json()
-        print(data)
-        return customer_service.update_customer(Customer(customer_id, data['first_name'], data['last_name']))
+        return customer_service.update_customer(customer_id, data).to_dict()
     except CustomerNotFoundError as e:
         return {
                    "message": str(e)
                }, 404
+    except InvalidParameterError as e:
+        return {
+                   "message": str(e)
+               }, 400
 
 
 # DELETE /customer/{customer_id}: Delete customer with an id of X (if the customer exists)
@@ -56,8 +63,12 @@ def update_customer_by_id(customer_id):
 def delete_customer_by_id(customer_id):
     print("delete customer by id:", customer_id)
     try:
-        return customer_service.delete_customer_by_id(customer_id)
+        customer_service.delete_customer_by_id(customer_id)
+        return {
+            "message": f"customer with id of {customer_id} was deleted successfully, along with all related accounts"
+        }
     except CustomerNotFoundError as e:
         return {
                    "message": str(e)
                }, 404
+
