@@ -10,7 +10,9 @@ class CustomerDao:
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM customers")
-                all_customers = cur.fetchall()
+                all_customers = []
+                for customer in cur:
+                    all_customers.append((Customer(customer[0], customer[1], customer[2]).to_dict()))
         return all_customers
 
     def get_customer_by_id(self, customer_id):
@@ -30,7 +32,6 @@ class CustomerDao:
                 conn.commit()
         return customer_added
 
-    # TODO delete customer's accounts
     def delete_customer(self, customer_id):
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
