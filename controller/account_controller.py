@@ -13,9 +13,7 @@ account_service = AccountService()
 # POST /customer/{customer_id}/accounts: Create a new account for a customer with id of X (if customer exists)
 @account_ctrl.route("/customer/<customer_id>/accounts", methods=["POST"])
 def add_account(customer_id):
-    print("create account for id:", customer_id)
     data = request.get_json()
-    print(data)
     try:
         account = account_service.add_account(customer_id, data)
         return account.to_dict(), 202
@@ -38,11 +36,8 @@ def add_account(customer_id):
 def get_customer_accounts(customer_id):
     amount_greater_than = request.args.get("amountGreaterThan")
     amount_less_than = request.args.get("amountLessThan")
-    print("get customer accounts:", customer_id)
-    print("account balance greater than:", amount_greater_than)
-    print("account balance less than:", amount_less_than)
     try:
-        customer_accounts = account_service.get_customer_accounts(customer_id)
+        customer_accounts = account_service.get_customer_accounts(customer_id, amount_less_than, amount_greater_than)
         return {f"customer id: {customer_id} accounts": customer_accounts}
     except CustomerNotFoundError as e:
         return {
@@ -85,7 +80,6 @@ def update_account_by_id(customer_id, account_id):
 # (if customer and account exist AND if account belongs to customer)
 @account_ctrl.route("/customer/<customer_id>/account/<account_id>", methods=["DELETE"])
 def delete_account_by_id(customer_id, account_id):
-    print("delete customer by id:", customer_id)
     try:
         account_service.delete_account_by_id(customer_id, account_id)
         return {

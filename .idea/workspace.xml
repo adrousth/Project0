@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1a3bdfba-f4ba-454d-888f-72e2a8064b2f" name="Changes" comment="" />
+    <list default="true" id="1a3bdfba-f4ba-454d-888f-72e2a8064b2f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/account_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/account_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/customer_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/customer_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/account_dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/dao/account_dao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/customer_dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/dao/customer_dao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/account_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/account_service.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,8 +95,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.testing_stuff" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.testing_stuff" />
       </list>
     </recent_temporary>
   </component>

@@ -37,10 +37,20 @@ class AccountService:
         self.get_account_by_id(customer_id, account_id)
         self.account_dao.delete_account_by_id(customer_id, account_id)
 
-    def get_customer_accounts(self, customer_id):
+    def get_customer_accounts(self, customer_id, amount_less_than, amount_greater_than):
         self.customer_service.get_customer_by_id(customer_id)
-        customer_accounts = self.account_dao.get_customer_accounts(customer_id)
+        try:
+            amount_greater_than = float(amount_greater_than)
+        except (TypeError, ValueError):
+            amount_greater_than = -1
+        try:
+            amount_less_than = float(amount_less_than)
+        except (TypeError, ValueError):
+            amount_less_than = 100000000
+
+        customer_accounts = self.account_dao.get_customer_accounts(customer_id, amount_greater_than, amount_less_than)
         return customer_accounts
+
 
     def get_account_by_id(self, customer_id, account_id):
         self.customer_service.get_customer_by_id(customer_id)

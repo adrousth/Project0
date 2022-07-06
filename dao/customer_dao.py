@@ -14,7 +14,6 @@ class CustomerDao:
         return all_customers
 
     def get_customer_by_id(self, customer_id):
-        print("customer id:", customer_id)
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM customers WHERE id = %s",
@@ -23,7 +22,6 @@ class CustomerDao:
         return customer
 
     def add_customer(self, data):
-        print("customer:", data)
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("INSERT INTO customers (first_name, last_name) VALUES (%s, %s) RETURNING *",
@@ -34,7 +32,6 @@ class CustomerDao:
 
     # TODO delete customer's accounts
     def delete_customer(self, customer_id):
-        print("delete customer id:", customer_id)
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("DELETE FROM accounts WHERE customer_id = %s", (customer_id,))
@@ -46,7 +43,6 @@ class CustomerDao:
                     return True
 
     def update_customer(self, customer):
-        print("updating customer:", customer.customer_id)
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
                 cur.execute("UPDATE customers SET first_name = %s, last_name = %s WHERE id = %s RETURNING *",

@@ -16,12 +16,15 @@ class AccountDao:
                 conn.commit()
         return account_added
 
-    def get_customer_accounts(self, customer_id):
+    def get_customer_accounts(self, customer_id, amount_greater_than, amount_less_than):
         with psycopg.connect(self.__connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT * FROM accounts WHERE customer_id = %s",
-                            (customer_id,))
-                customer_accounts = cur.fetchall()
+                cur.execute("SELECT * FROM accounts WHERE customer_id = %s AND balance > %s AND balance < %s",
+                            (customer_id, amount_greater_than, amount_less_than))
+                customer_accounts = []
+                for account in cur:
+                    customer_accounts.append((Account(account[0], account[1], account[2], account[3])).to_dict())
+
         return customer_accounts
 
     def get_account_by_id(self, customer_id, account_id):

@@ -31,7 +31,6 @@ def get_all_customers():
 # GET /customer/{customer_id}: Get customer with an id of X (if the customer exists)
 @customer_ctrl.route("/customer/<customer_id>", methods=["GET"])
 def get_customer_by_id(customer_id):
-    print("get customer by id:", customer_id)
     try:
         customer = customer_service.get_customer_by_id(customer_id)
         return customer.to_dict()
@@ -44,7 +43,6 @@ def get_customer_by_id(customer_id):
 # PUT /customer/{customer_id}: Update customer with an id of X (if the customer exists)
 @customer_ctrl.route("/customer/<customer_id>", methods=["PUT"])
 def update_customer_by_id(customer_id):
-    print("update customer by id:", customer_id)
     try:
         data = request.get_json()
         return customer_service.update_customer(customer_id, data).to_dict()
@@ -61,7 +59,6 @@ def update_customer_by_id(customer_id):
 # DELETE /customer/{customer_id}: Delete customer with an id of X (if the customer exists)
 @customer_ctrl.route("/customer/<customer_id>", methods=["DELETE"])
 def delete_customer_by_id(customer_id):
-    print("delete customer by id:", customer_id)
     try:
         customer_service.delete_customer_by_id(customer_id)
         return {
