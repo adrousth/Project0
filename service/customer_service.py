@@ -22,7 +22,7 @@ class CustomerService:
             if len(data["last_name"]) < 2:
                 raise InvalidParameterError("last name must be at least 2 characters long")
             elif len(data["last_name"]) > 50:
-                raise InvalidParameterError("first name cannot be more than 50 characters long")
+                raise InvalidParameterError("last name cannot be more than 50 characters long")
 
             customer_added = self.customer_dao.add_customer(data)
             return Customer(customer_added[0], customer_added[1], customer_added[2])
@@ -44,7 +44,7 @@ class CustomerService:
             if len(data["last_name"]) < 2:
                 raise InvalidParameterError("last name must be at least 2 characters long")
             elif len(data["last_name"]) > 50:
-                raise InvalidParameterError("first name cannot be more than 50 characters long")
+                raise InvalidParameterError("last name cannot be more than 50 characters long")
             customer.last_name = data["last_name"]
         except KeyError:
             pass
@@ -60,6 +60,8 @@ class CustomerService:
 
     def delete_customer_by_id(self, customer_id):
         if not self.customer_dao.delete_customer(customer_id):
-            raise CustomerNotFoundError(f"User with id {customer_id} was not found")
+            raise CustomerNotFoundError(f"Customer with id {customer_id} was not found")
+        else:
+            return True
 
 

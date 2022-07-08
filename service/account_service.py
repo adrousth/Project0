@@ -51,7 +51,6 @@ class AccountService:
         customer_accounts = self.account_dao.get_customer_accounts(customer_id, amount_greater_than, amount_less_than)
         return customer_accounts
 
-
     def get_account_by_id(self, customer_id, account_id):
         self.customer_service.get_customer_by_id(customer_id)
         customer_account = self.account_dao.get_account_by_id(customer_id, account_id)
